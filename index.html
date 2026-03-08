@@ -101,7 +101,7 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
     <div class="sub">4月25日（土）午後 | 出発地点：Waldorf Astoria Beverly Hills</div>
   </div>
   <div class="stats">
-    <div>全46スポット｜6カテゴリー｜⭐伊勢さんおすすめ12</div>
+    <div>全55スポット｜6カテゴリー｜⭐伊勢さんおすすめ12</div>
     <div>ピンをクリックで詳細＆WABHからの距離</div>
   </div>
 </div>
@@ -173,13 +173,13 @@ const spots=[
   {name:"sweetgreen",jp:"スウィート・グリーン",cat:"ライフスタイル（飲食系）",type:"ファストカジュアル",addr:"421 N Rodeo Dr, Beverly Hills",lat:34.0705,lng:-118.4060,desc:"健康的な食生活を都市のライフスタイルとして提案"},
   {name:"Shake Shack",jp:"シェイク・シャック",cat:"ライフスタイル（飲食系）",type:"ファストフード",addr:"9601 S Santa Monica Blvd, Beverly Hills",lat:34.0677,lng:-118.4100,desc:"モダン・アメリカンバーガー"},
   {name:"Urth Caffé",jp:"アース・カフェ",cat:"ライフスタイル（飲食系）",type:"カフェ",addr:"267 S. Beverly Dr, Beverly Hills",lat:34.0637,lng:-118.4003,desc:"LA発祥のオーガニックカフェ"},
-  {name:"La Colombe Coffee",jp:"ラ・コロンブ",cat:"ライフスタイル（飲食系）",type:"コーヒー",addr:"9606 S Santa Monica Blvd, Beverly Hills",lat:34.0676,lng:-118.4102,desc:"テロワールと物語のあるコーヒー"},
-  {name:"The Rooftop BH",jp:"ザ・ルーフトップ",cat:"ライフスタイル（飲食系）",type:"レストラン/バー",addr:"9850 Wilshire Blvd, Beverly Hills",lat:34.0661,lng:-118.4017,desc:"Waldorf Astoriaのルーフトップダイニング"},
+  {name:"La Colombe Coffee",jp:"ラ・コロンブ・コーヒー",cat:"ライフスタイル（飲食系）",type:"コーヒー",addr:"9606 S Santa Monica Blvd, Beverly Hills",lat:34.0676,lng:-118.4102,desc:"テロワールと物語のあるコーヒー"},
+  {name:"The Rooftop Beverly Hills",jp:"ザ・ルーフトップ",cat:"ライフスタイル（飲食系）",type:"レストラン/バー",addr:"9850 Wilshire Blvd, Beverly Hills",lat:34.0661,lng:-118.4017,desc:"Waldorf Astoriaのルーフトップダイニング"},
   {name:"TENSHO",ise_pick:true,jp:"テンショウ",cat:"ライフスタイル（飲食系）",type:"レストラン",addr:"418 E 2nd St, Little Tokyo",lat:34.0490,lng:-118.2395,desc:"伊勢さんが経営するしゃぶしゃぶレストラン。特別な食体験を提供。"},
   {name:"Grand Central Market",jp:"グランド・セントラル・マーケット",cat:"ライフスタイル（飲食系）",type:"フードホール",addr:"317 S Broadway, DTLA",lat:34.0508,lng:-118.2489,desc:"LAを代表するフードホール"},
   {name:"Mitsuwa",jp:"ミツワ",cat:"ライフスタイル（飲食系）",type:"日系スーパー",addr:"21515 S Western Ave, Torrance",lat:33.8320,lng:-118.3095,desc:"日本の「当たり前」を見直すきっかけ"},
   {name:"Tokyo Central",ise_pick:true,jp:"東京セントラル",cat:"ライフスタイル（飲食系）",type:"日系スーパー",addr:"1740 W Artesia Blvd, Gardena",lat:33.8750,lng:-118.3135,desc:"ドンキグループの日系スーパー。品揃えは日本の普通のスーパー以上。商品裏のWarning表示に注目。日本の添加物事情との違いに驚く。健康食材でもWarning対象。※PCH店が宿から近い。"},
-  {name:"Nijiya Market",jp:"ニジヤ",cat:"ライフスタイル（飲食系）",type:"日系スーパー",addr:"2130 Sawtelle Blvd, LA",lat:34.0380,lng:-118.4330,desc:"日本の食品基準を見直す"},
+  {name:"Nijiya Market",jp:"ニジヤ・マーケット",cat:"ライフスタイル（飲食系）",type:"日系スーパー",addr:"2130 Sawtelle Blvd, LA",lat:34.0380,lng:-118.4330,desc:"日本の食品基準を見直す"},
   {name:"Trader Joe's",ise_pick:true,jp:"トレーダー・ジョーズ",cat:"ライフスタイル（飲食系）",type:"スーパー",addr:"7304 Santa Monica Blvd, WeHo",lat:34.0908,lng:-118.3475,desc:"オーガニックで最も愛されるスーパー。価格も安い。健康素材のPB商品が充実。実はドン・キホーテが毎年研修で訪れる場所。ドシリーズはトレジョのPBを参考に誕生。"},
   {name:"Chick-fil-A",jp:"チック・フィル・エー",cat:"ライフスタイル（飲食系）",type:"ファストフード",addr:"1530 Vine St, Hollywood",lat:34.0981,lng:-118.3267,desc:"価値観を軸にした経営モデル"},
   {name:"Dry Bar",ise_pick:true,jp:"ドライバー",cat:"ライフスタイル（コスメ・美容）",type:"美容院",addr:"8379 W 3rd St, LA",lat:34.0723,lng:-118.3716,desc:"Alli Webb創業のブロードライ専門サロン。前日に行くのもおすすめ。本イベントのゲストスピーカーが創業者。"},
@@ -188,7 +188,7 @@ const spots=[
   {name:"Lululemon",jp:"ルルレモン",cat:"ライフスタイル（ファッション・ウェルネス）",type:"スポーツウェア",addr:"320 N Beverly Dr, Beverly Hills",lat:34.0698,lng:-118.4006,desc:"スポーツウェア＝ライフスタイル"},
   {name:"Alo Yoga",ise_pick:true,jp:"アロ",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ヨガウェア",addr:"308 N Beverly Dr, Beverly Hills",lat:34.0695,lng:-118.4005,desc:"LAで一番人気のヨガ・トレーナー系ブランド。ウェルネスカルチャーの最前線を体験できる。"},
   {name:"SKIMS",jp:"スキムズ",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ランジェリー",addr:"8569 Sunset Blvd, WeHo",lat:34.0903,lng:-118.3765,desc:"インクルーシブ・ランジェリー"},
-  {name:"Equinox",jp:"イクイノックス",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ジム",addr:"9601 Wilshire Blvd, Beverly Hills",lat:34.0657,lng:-118.4023,desc:"フィットネス＝生き方の価値観"},
+  {name:"Equinox Beverly Hills",jp:"イクイノックス",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ジム",addr:"9601 Wilshire Blvd, Beverly Hills",lat:34.0657,lng:-118.4023,desc:"フィットネス＝生き方の価値観"},
   {name:"The Vitamin Shoppe",jp:"ビタミン・ショップ",cat:"ライフスタイル（ファッション・ウェルネス）",type:"サプリ",addr:"101 N Fairfax Ave, LA",lat:34.0730,lng:-118.3615,desc:"「体＝資産」という考え方"},
   {name:"Melrose Avenue",ise_pick:true,jp:"メルローズ・アベニュー",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ストリート",addr:"Melrose Ave, WeHo",lat:34.0837,lng:-118.3615,desc:"LAのカルチャーが集結するストリート。ヴィンテージショップ、ストリートアート、トレンドセッターが集まるエリア。"},
   {name:"Abbot Kinney Blvd",jp:"アボット・キニー",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ストリート",addr:"Abbot Kinney Blvd, Venice",lat:33.9925,lng:-118.4690,desc:"サステナブルブランド集結"},
@@ -199,14 +199,14 @@ const spots=[
   {name:"The Getty Center",jp:"ゲティ・センター",cat:"自己表現",type:"美術館",addr:"1200 Getty Center Dr, LA",lat:34.0780,lng:-118.4741,desc:"圧倒的な建築美と静寂"},
   {name:"Petersen Automotive Museum",jp:"ピーターセン自動車博物館",cat:"自己表現",type:"博物館",addr:"6060 Wilshire Blvd, LA",lat:34.0622,lng:-118.3612,desc:"デザインの最高峰"},
   {name:"Franklin Canyon Park",jp:"フランクリン・キャニオン",cat:"自己表現",type:"自然公園",addr:"Beverly Hills",lat:34.1173,lng:-118.4100,desc:"自然の中でリフレッシュ"},
-  {name:"WeHo Community Garden",jp:"ウエストハリウッド・コミュニティガーデン",cat:"自己表現",type:"コミュニティガーデン",addr:"7377 Santa Monica Blvd",lat:34.0907,lng:-118.3503,desc:"コミュニティ × 自立の象徴"},
+  {name:"West Hollywood Community Garden",jp:"ウエストハリウッド・コミュニティガーデン",cat:"自己表現",type:"コミュニティガーデン",addr:"7377 Santa Monica Blvd",lat:34.0907,lng:-118.3503,desc:"コミュニティ × 自立の象徴"},
   {name:"Silicon Beach",jp:"シリコンビーチ",cat:"自己表現",type:"テックハブ",addr:"Santa Monica / Venice",lat:34.0195,lng:-118.4912,desc:"新しい産業が生まれる街"},
   {name:"Tesla Showroom",jp:"テスラ",cat:"自己表現",type:"ショールーム",addr:"930 Hilgard Ave, LA",lat:34.0645,lng:-118.4440,desc:"EV革命とイノベーション"},
-  {name:"Beverly Hills Public Library",jp:"BH公共図書館",cat:"教育",type:"図書館",addr:"444 N Rexford Dr, Beverly Hills",lat:34.0735,lng:-118.3960,desc:"誰にでも平等に開かれた空間"},
+  {name:"Beverly Hills Public Library",jp:"ビバリーヒルズ公共図書館",cat:"教育",type:"図書館",addr:"444 N Rexford Dr, Beverly Hills",lat:34.0735,lng:-118.3960,desc:"誰にでも平等に開かれた空間"},
   {name:"UCLA",jp:"UCLA",cat:"教育",type:"大学",addr:"405 Hilgard Ave, LA",lat:34.0689,lng:-118.4452,desc:"公立トップ大学"},
-  {name:"USC",jp:"南カリフォルニア大学",cat:"教育",type:"大学",addr:"LA, CA 90007",lat:34.0224,lng:-118.2851,desc:"起業教育、alumni network"},
-  {name:"LA Central Library",jp:"LA中央図書館",cat:"教育",type:"図書館",addr:"630 W 5th St, DTLA",lat:34.0502,lng:-118.2553,desc:"図書館＝教育センター"},
-  {name:"California Science Center",jp:"CA科学センター",cat:"教育",type:"科学博物館",addr:"700 Exposition Park Dr, LA",lat:34.0147,lng:-118.2873,desc:"体験型STEAM教育"},
+  {name:"University of Southern California (USC)",jp:"南カリフォルニア大学",cat:"教育",type:"大学",addr:"LA, CA 90007",lat:34.0224,lng:-118.2851,desc:"起業教育、alumni network"},
+  {name:"Los Angeles Central Library",jp:"ロサンゼルス中央図書館",cat:"教育",type:"図書館",addr:"630 W 5th St, DTLA",lat:34.0502,lng:-118.2553,desc:"図書館＝教育センター"},
+  {name:"California Science Center",jp:"カリフォルニア科学センター",cat:"教育",type:"科学博物館",addr:"700 Exposition Park Dr, LA",lat:34.0147,lng:-118.2873,desc:"体験型STEAM教育"},
   {name:"Caltech",jp:"カリフォルニア工科大学",cat:"教育",type:"大学",addr:"1200 E California Blvd, Pasadena",lat:34.1377,lng:-118.1253,desc:"世界トップのSTEM大学"},
   {name:"Inner-City Arts",jp:"インナーシティ・アーツ",cat:"教育",type:"アート教育NPO",addr:"720 Kohler St, DTLA",lat:34.0414,lng:-118.2418,desc:"低所得地域の芸術教育"},
   {name:"Homeboy Industries",jp:"ホームボーイ・インダストリーズ",cat:"サステナビリティ・社会貢献",type:"ソーシャルエンタープライズ",addr:"200 N Spring St, DTLA",lat:34.0565,lng:-118.2437,desc:"社会課題をビジネスで解決"},
@@ -214,6 +214,16 @@ const spots=[
   {name:"Eataly",ise_pick:true,jp:"イータリー（センチュリーシティ）",cat:"ライフスタイル（飲食系）",type:"フード＆ショッピング",addr:"10250 Santa Monica Blvd, Los Angeles, CA 90067",lat:34.0584,lng:-118.4178,desc:"Westfield Century City内のイタリアンフードホール。レストランで食べられる食材が隣のスーパーで全て買える。見るだけで楽しいイタリア輸入商材多数。ラーメン凪の行列も一見の価値あり。"},
   {name:"Community Goods",ise_pick:true,jp:"コミュニティーグッズ",cat:"ライフスタイル（飲食系）",type:"抹茶カフェ",addr:"8709 Santa Monica Blvd, West Hollywood, CA 90069",lat:34.0858,lng:-118.381,desc:"抹茶が世界でどう変化進化しているかを現場で体感。クラウドを飲むとトレンドが分かる。コリアン系がカフェを牽引し、セレブコラボで常に行列。※PDC店が空いている。"},
   {name:"Warabimochi Kamakura",ise_pick:true,jp:"わらび餅 鎌倉",cat:"ライフスタイル（飲食系）",type:"和スイーツ",addr:"333 S Alameda St #315, Los Angeles, CA 90013",lat:34.047,lng:-118.2385,desc:"伊勢さんが経営するわらび餅ショップ。日本の伝統的な味をLAで展開。"},
+  {name:"Detox Market",jp:"デトックス・マーケット",cat:"ライフスタイル（コスメ・美容）",type:"クリーンビューティー",addr:"8373 W 3rd St, Los Angeles",lat:34.0718,lng:-118.3730,desc:"クリーンビューティーのキュレーションショップ。"},
+  {name:"Glossier",jp:"グロッシエ",cat:"ライフスタイル（コスメ・美容）",type:"ビューティーブランド",addr:"8407 Melrose Pl, Los Angeles",lat:34.0833,lng:-118.37,desc:"美容ブログ発のコミュニティ型ブランド。自然な美しさを引き出す「スキンケア発想のメイク」を提案。"},
+  {name:"Ilia Beauty",jp:"イリア・ビューティー",cat:"ライフスタイル（コスメ・美容）",type:"クリーンビューティー",addr:"270 N Beverly Dr, Beverly Hills (Sephora内)",lat:34.0692,lng:-118.4008,desc:"スキンケア成分を取り入れたクリーンビューティーブランド。リサイクル可能なパッケージ。"},
+  {name:"Fenty Beauty",jp:"フェンティ・ビューティー",cat:"ライフスタイル（コスメ・美容）",type:"ビューティーブランド",addr:"270 N Beverly Dr, Beverly Hills (Sephora内)",lat:34.0691,lng:-118.4006,desc:"リアーナが立ち上げ。40色以上のファンデーション展開で美容業界の多様性（インクルーシブビューティー）を加速。"},
+  {name:"Merit Beauty",jp:"メリット・ビューティー",cat:"ライフスタイル（コスメ・美容）",type:"ミニマルビューティー",addr:"270 N Beverly Dr, Beverly Hills (Sephora内)",lat:34.0693,lng:-118.4004,desc:"少ないアイテムで自然な美しさを引き出すミニマルビューティーブランド。"},
+  {name:"Patagonia",jp:"パタゴニア",cat:"サステナビリティ・社会貢献",type:"アウトドアブランド",addr:"1344 4th St, Santa Monica",lat:34.0165,lng:-118.4935,desc:"2022年に所有権を環境保護団体へ移転。修理文化、長く使う服、環境運動の象徴。"},
+  {name:"Allbirds",jp:"オールバーズ",cat:"サステナビリティ・社会貢献",type:"サステナブルシューズ",addr:"1324 Abbot Kinney Blvd, Venice",lat:33.993,lng:-118.4685,desc:"天然素材使用。商品ごとにCO₂排出量を表示。透明性の高いブランド。"},
+  {name:"TOMS",jp:"トムス",cat:"サステナビリティ・社会貢献",type:"ソーシャルビジネス",addr:"1344 Abbot Kinney Blvd, Venice",lat:33.9928,lng:-118.4688,desc:"「One for One」モデルの先駆け。ソーシャルビジネスの概念を一般消費者に広めた代表的ブランド。"},
+  {name:"Warby Parker",jp:"ワービー・パーカー",cat:"サステナビリティ・社会貢献",type:"D2Cアイウェア",addr:"1402 Abbot Kinney Blvd, Venice",lat:33.992,lng:-118.4692,desc:"D2Cモデルでメガネの価格革命。Home Try-On、視力支援プログラム。"},
+
 ];
 
 // ── Map ──
