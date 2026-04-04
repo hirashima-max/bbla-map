@@ -124,6 +124,7 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
 
 <script>
 const WABH={lat:34.0660,lng:-118.4015,name:"Waldorf Astoria Beverly Hills"};
+const CMTP={lat:33.8125,lng:-118.3375,name:"Courtyard by Marriott Torrance/Palos Verdes"};
 
 const cats={
   "ライフスタイル（飲食系）":{color:"#E6A817",icon:"🍽️",en:"Food"},
@@ -232,7 +233,11 @@ function mi(k){return(k*.621371).toFixed(1)}
 function dt(k){return Math.round(k/30*60)}
 
 L.marker([WABH.lat,WABH.lng],{icon:L.divIcon({html:'<div class="start-icon">★</div>',className:'',iconSize:[30,30],iconAnchor:[15,15]})}).addTo(map)
-  .bindPopup('<div style="font-size:13px"><b>★ 出発地点: '+WABH.name+'</b><br><span style="color:#666">9850 Wilshire Blvd, Beverly Hills, CA 90210</span><br><br><i>4/25: Alli Webbセミナー後、Narrative Tripスタート<br>4/24: セルフ・ナラティブトリップ（Torrance周辺）</i></div>');
+  .bindPopup('<div style="font-size:13px"><b>★ 出発地点（4/25）: '+WABH.name+'</b><br><span style="color:#666">9850 Wilshire Blvd, Beverly Hills, CA 90210</span><br><br><i>4/25: Alli Webbセミナー後、Narrative Tripスタート</i></div>');
+
+// Courtyard Marriott — 4/24 Self-Trip starting point
+L.marker([CMTP.lat,CMTP.lng],{icon:L.divIcon({html:'<div class="start-icon" style="background:#8E24AA;border-color:#E1BEE7">★</div>',className:'',iconSize:[30,30],iconAnchor:[15,15]})}).addTo(map)
+  .bindPopup('<div style="font-size:13px"><div style="background:#8E24AA;color:white;padding:5px 10px;margin:-13px -20px 8px;border-radius:4px 4px 0 0;font-weight:600;font-size:11px">🟣 4/24 セルフトリップ 宿泊先</div><b>★ '+CMTP.name+'</b><br><span style="color:#666">2633 Sepulveda Blvd, Torrance, CA 90505</span><br><br><i>4/24（金）セルフ・ナラティブトリップの出発地点。<br>参加者の宿泊先ホテル。</i></div>');
 
 [2,5,10].forEach(km=>{
   const c=km===2?'#27ae60':km===5?'#f39c12':'#e74c3c';
@@ -259,13 +264,14 @@ const active={};Object.keys(cats).forEach(c=>{active[c]=true});
 let iseFilter=false;
 let selfTripFilter=false;
 
-function makePopup(s,c,d,miles,mins,dl,safetyInfo){
+function makePopup(s,c,d,miles,mins,dl,safetyInfo,cmtpInfo){
   return '<div style="min-width:220px;font-size:12px">'+
     '<div style="background:'+c.color+';color:white;padding:5px 10px;margin:-13px -20px 8px;border-radius:4px 4px 0 0;font-weight:600;font-size:11px">'+c.icon+' '+s.cat+'</div>'+
     (s.ise_pick?'<div style="background:#FF6B35;color:white;display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px">⭐ 伊勢さんおすすめ</div><br>':'')+
     (s.self_trip?'<div style="background:#8E24AA;color:white;display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px">🟣 4/24 セルフトリップ</div><br>':'')+
     '<b style="font-size:14px">'+s.name+'</b><br><span style="color:#888">'+s.jp+'</span><br>'+
     '<span style="color:#555;font-size:11px">'+s.type+'</span>'+
+    (cmtpInfo?cmtpInfo:'')+
     '<div style="background:#f8f9fa;padding:6px 8px;border-radius:5px;margin:6px 0">'+
     '<b>📍 WABHからの距離:</b><br>'+
     d.toFixed(1)+'km ('+miles+'mi) — 車で約'+mins+'分<br>'+
@@ -290,6 +296,18 @@ spots.forEach(s=>{
       break;
     }
   }
+  // For self-trip spots, also show distance from Courtyard Marriott
+  let cmtpInfo='';
+  if(s.self_trip){
+    const dc=hav(CMTP.lat,CMTP.lng,s.lat,s.lng);
+    const miC=mi(dc),minC=dt(dc);
+    const dlC=dc<1.5?'🟢 徒歩圏内':dc<5?'🟡 短い車移動':'🔴 車で移動';
+    cmtpInfo='<div style="background:#F3E5F5;padding:6px 8px;border-radius:5px;margin:6px 0;border:1px solid #CE93D8">'+
+      '<b style="color:#8E24AA">🟣 ホテルからの距離:</b><br>'+
+      dc.toFixed(1)+'km ('+miC+'mi) — 車で約'+minC+'分<br>'+
+      '<span style="font-size:11px">'+dlC+'</span>'+
+    '</div>';
+  }
   const isIse=s.ise_pick||false;
   const isSelfTrip=s.self_trip||false;
   const borderColor=isSelfTrip?'#8E24AA':isIse?'#FF6B35':'white';
@@ -297,7 +315,7 @@ spots.forEach(s=>{
   const sz=isIse||isSelfTrip?28:24;
   const bw=isIse||isSelfTrip?3:2;
   const icon=L.divIcon({html:'<div style="position:relative"><div style="background:'+c.color+';color:white;width:'+sz+'px;height:'+sz+'px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:'+(isIse||isSelfTrip?13:12)+'px;border:'+bw+'px solid '+borderColor+';box-shadow:'+(isIse||isSelfTrip?'0 0 0 2px white,0 0 10px '+glowColor+',0 2px 6px rgba(0,0,0,.3)':'0 2px 6px rgba(0,0,0,.3)')+'">'+c.icon+'</div>'+(isIse?'<div class="ise-badge">★</div>':'')+(isSelfTrip?'<div class="self-trip-badge">24</div>':'')+'</div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
-  const popup=makePopup(s,c,d,miles,mins,dl,safetyInfo);
+  const popup=makePopup(s,c,d,miles,mins,dl,safetyInfo,cmtpInfo);
   layerGroups[s.cat].addLayer(L.marker([s.lat,s.lng],{icon}).bindPopup(popup));
 });
 
@@ -313,10 +331,10 @@ const med=spots.filter(s=>{const d=hav(WABH.lat,WABH.lng,s.lat,s.lng);return d>=
 const far=spots.filter(s=>hav(WABH.lat,WABH.lng,s.lat,s.lng)>=5).length;
 const selfTripCount=spots.filter(s=>s.self_trip).length;
 infoEl.innerHTML='<button id="info-close" onclick="toggleInfo(false)">✕</button>'+
-'<h3>★ 出発地点: WABH</h3>'+
+'<h3>★ 出発地点（2箇所）</h3>'+
+'<div style="color:#666;font-size:11px;margin-bottom:6px"><b style="color:#E74C3C">★ 4/25:</b> Waldorf Astoria Beverly Hills<br><b style="color:#8E24AA">★ 4/24:</b> Courtyard Marriott Torrance</div>'+
 '<div style="background:#FFF3E0;border:1px solid #FF6B35;border-radius:6px;padding:6px 8px;margin-bottom:6px;font-size:11px"><b style="color:#FF6B35">⭐ 伊勢さんおすすめ: '+spots.filter(s=>s.ise_pick).length+'スポット</b></div>'+
 '<div style="background:#F3E5F5;border:1px solid #8E24AA;border-radius:6px;padding:6px 8px;margin-bottom:8px;font-size:11px"><b style="color:#8E24AA">🟣 4/24 セルフトリップ: '+selfTripCount+'スポット</b></div>'+
-'<div style="color:#666;font-size:11px;margin-bottom:6px">Waldorf Astoria Beverly Hills<br>4/24 セルフトリップ · 4/25 Alli Webb後</div>'+
 '<div class="st"><span>🟢 徒歩圏内 (&lt;2km)</span><b>'+near+'</b></div>'+
 '<div class="st"><span>🟡 短い車移動 (2-5km)</span><b>'+med+'</b></div>'+
 '<div class="st"><span>🔴 車で移動 (5km+)</span><b>'+far+'</b></div>'+
@@ -436,6 +454,7 @@ if(window.innerWidth<=768){
 // ── Fit map to show all spots on load ──
 const allBounds=L.latLngBounds(spots.map(s=>[s.lat,s.lng]));
 allBounds.extend([WABH.lat,WABH.lng]);
+allBounds.extend([CMTP.lat,CMTP.lng]);
 map.fitBounds(allBounds,{padding:[40,40]});
 
 // ── Quick-jump area nav (helpful for novice LA travelers) ──
