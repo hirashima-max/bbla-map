@@ -9,17 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;overflow:hidden;height:100vh;height:100dvh;display:flex;flex-direction:column}
-
-/* ── Header ── */
 #header{flex:0 0 auto;background:linear-gradient(135deg,#1F4E79,#2E86C1);color:white;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:2000;position:relative}
 #header h1{font-size:16px;font-weight:600;line-height:1.2}
 #header .sub{font-size:11px;opacity:.85;margin-top:2px}
 #header .stats{text-align:right;font-size:10px;opacity:.85}
-
-/* ── Map fills remaining space ── */
 #map{flex:1 1 auto;position:relative;z-index:1}
-
-/* ── Closable Info Panel (top-right) ── */
 #info{position:fixed;top:60px;right:10px;z-index:1200;background:white;border-radius:10px;padding:12px 14px;box-shadow:0 4px 16px rgba(0,0,0,.18);max-width:240px;font-size:12px;line-height:1.5;transition:transform .3s,opacity .3s}
 #info.hidden{transform:translateX(300px);opacity:0;pointer-events:none}
 #info h3{color:#1F4E79;margin-bottom:4px;font-size:13px;padding-right:24px}
@@ -29,13 +23,9 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
 #info-close:hover{background:#ddd;color:#333}
 #info-reopen{position:fixed;top:60px;right:10px;z-index:1200;background:white;border-radius:10px;padding:8px 12px;box-shadow:0 3px 12px rgba(0,0,0,.15);cursor:pointer;font-size:12px;font-weight:600;color:#1F4E79;display:none;transition:.2s}
 #info-reopen:hover{background:#1F4E79;color:white}
-
-/* ── Filter Panel ── */
 #filter-btn{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:1200;background:linear-gradient(135deg,#1F4E79,#2E86C1);color:white;border:none;border-radius:24px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;gap:8px;transition:.2s;white-space:nowrap}
 #filter-btn:hover{transform:translateX(-50%) scale(1.05)}
 #filter-btn .badge{background:#FF6B35;border-radius:10px;padding:2px 7px;font-size:11px}
-
-/* Filter drawer (slides up from bottom) */
 #filter-drawer{position:fixed;bottom:0;left:0;right:0;z-index:1300;background:white;border-radius:16px 16px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:70vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #filter-drawer.open{transform:translateY(0)}
 #filter-drawer .handle{width:40px;height:4px;background:#ccc;border-radius:2px;margin:10px auto 6px}
@@ -43,8 +33,6 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
 #filter-drawer .drawer-header h3{font-size:14px;color:#1F4E79}
 #filter-drawer .drawer-close{background:none;border:none;font-size:20px;cursor:pointer;color:#999;padding:4px 8px}
 #filter-drawer .drawer-body{padding:12px 16px 24px}
-
-/* Filter items in drawer */
 .filter-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .filter-chip{display:flex;align-items:center;gap:5px;padding:8px 12px;border-radius:20px;border:2px solid #e0e0e0;background:white;cursor:pointer;font-size:12px;transition:.2s;user-select:none;-webkit-tap-highlight-color:transparent}
 .filter-chip:active{transform:scale(.95)}
@@ -52,31 +40,32 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
 .filter-chip.off{opacity:.35;border-color:#e0e0e0;background:white}
 .filter-chip .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .filter-chip .count{background:#f0f0f0;border-radius:8px;padding:1px 6px;font-size:10px;color:#666}
-
-/* Ise pick special chip */
 .filter-chip.ise{border-color:#FF6B35;background:#FFF3E0}
 .filter-chip.ise.active{background:#FF6B35;color:white}
 .filter-chip.ise.active .count{background:rgba(255,255,255,.3);color:white}
-
-/* Safety chip */
 .filter-chip.safety{border-color:#FF9800;background:#FFF3E0;color:#E65100;font-weight:600}
 .filter-chip.safety.active{background:#E65100;color:white;border-color:#E65100}
-
-/* ── Backdrop for drawer ── */
+.filter-chip.self-trip{border-color:#8E24AA;background:#F3E5F5}
+.filter-chip.self-trip.active{background:#8E24AA;color:white}
+.filter-chip.self-trip.active .count{background:rgba(255,255,255,.3);color:white}
 #backdrop{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1250;background:rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .3s}
 #backdrop.show{opacity:1;pointer-events:auto}
-
-/* ── Safety Legend ── */
 #safety-legend{position:fixed;bottom:70px;left:12px;z-index:1200;background:white;border-radius:10px;padding:12px 14px;box-shadow:0 3px 12px rgba(0,0,0,.15);font-size:12px;display:none;max-width:250px}
 #safety-legend h4{font-size:13px;margin-bottom:8px;color:#333}
 .sl-row{display:flex;align-items:center;gap:8px;margin:4px 0}
 .sl-box{width:22px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)}
-
-/* ── Marker styles ── */
 .start-icon{background:#E74C3C;color:white;font-weight:bold;font-size:12px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 .ise-badge{position:absolute;top:-8px;right:-8px;background:#FF6B35;color:white;font-size:8px;font-weight:700;padding:1px 4px;border-radius:8px;border:1.5px solid white;box-shadow:0 1px 4px rgba(0,0,0,.3);z-index:10;pointer-events:none}
-
-/* ── Mobile adjustments ── */
+.self-trip-badge{position:absolute;top:-8px;right:-8px;background:#8E24AA;color:white;font-size:8px;font-weight:700;padding:1px 4px;border-radius:8px;border:1.5px solid white;box-shadow:0 1px 4px rgba(0,0,0,.3);z-index:10;pointer-events:none}
+/* ── Area nav (quick-jump for novice travelers) ── */
+.area-nav{z-index:1100}
+.area-nav-inner{background:white;border-radius:10px;padding:8px;box-shadow:0 3px 12px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:4px;min-width:120px}
+.area-title{font-size:11px;font-weight:600;color:#1F4E79;text-align:center;padding:2px 0 4px;border-bottom:1px solid #eee;margin-bottom:2px}
+.area-btn{background:white;border:1px solid #e0e0e0;border-radius:8px;padding:6px 10px;font-size:11px;cursor:pointer;text-align:left;transition:.15s;color:#333;font-weight:500;line-height:1.3}
+.area-btn:hover{background:#E3F2FD;border-color:#2E86C1}
+.area-btn:active{transform:scale(.97)}
+.area-btn.all{background:#1F4E79;color:white;border-color:#1F4E79;text-align:center;font-weight:600}
+.area-btn.all:hover{background:#2E86C1}
 @media(max-width:768px){
   #header{padding:8px 12px}
   #header h1{font-size:13px}
@@ -87,6 +76,9 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
   #filter-btn{bottom:12px;padding:8px 16px;font-size:12px}
   #safety-legend{bottom:60px;left:8px;right:8px;max-width:none}
   .leaflet-popup-content{font-size:12px !important}
+  .area-nav-inner{min-width:100px;padding:6px}
+  .area-btn{padding:5px 8px;font-size:10px}
+  .area-title{font-size:10px}
 }
 @media(max-width:400px){
   #header h1{font-size:12px}
@@ -98,29 +90,21 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
 <div id="header">
   <div>
     <h1>Beyond Borders LA — Narrative Trip Spots マップ</h1>
-    <div class="sub">4月25日（土）午後 | 出発地点：Waldorf Astoria Beverly Hills</div>
+    <div class="sub">4月24日（金）セルフトリップ ＋ 4月25日（土）午後 | 出発地点：Waldorf Astoria Beverly Hills</div>
   </div>
   <div class="stats">
-    <div>全55スポット｜6カテゴリー｜⭐伊勢さんおすすめ12</div>
+    <div>全58スポット｜6カテゴリー｜⭐伊勢さんおすすめ12｜🟣セルフトリップ3</div>
     <div>ピンをクリックで詳細＆WABHからの距離</div>
   </div>
 </div>
 <div id="map"></div>
-
-<!-- Closable info panel -->
 <div id="info"></div>
 <div id="info-reopen" onclick="toggleInfo(true)">ℹ️ 情報パネル</div>
-
-<!-- Floating filter button -->
 <button id="filter-btn" onclick="openDrawer()">
   <span>🔍 フィルター・絞り込み</span>
   <span class="badge">⭐12</span>
 </button>
-
-<!-- Backdrop -->
 <div id="backdrop" onclick="closeDrawer()"></div>
-
-<!-- Filter drawer -->
 <div id="filter-drawer">
   <div class="handle"></div>
   <div class="drawer-header">
@@ -129,8 +113,6 @@ body{font-family:'Segoe UI','Hiragino Sans',Arial,sans-serif;background:#f5f5f5;
   </div>
   <div class="drawer-body" id="drawer-body"></div>
 </div>
-
-<!-- Safety legend -->
 <div id="safety-legend">
   <h4>⚠️ 安全度レベル（犯罪率ベース）</h4>
   <div class="sl-row"><div class="sl-box" style="background:rgba(39,174,96,.25)"></div><span><b>安全</b> — 観光客にも安心</span></div>
@@ -223,35 +205,44 @@ const spots=[
   {name:"Allbirds",jp:"オールバーズ",cat:"サステナビリティ・社会貢献",type:"サステナブルシューズ",addr:"1324 Abbot Kinney Blvd, Venice",lat:33.993,lng:-118.4685,desc:"天然素材使用。商品ごとにCO₂排出量を表示。透明性の高いブランド。"},
   {name:"TOMS",jp:"トムス",cat:"サステナビリティ・社会貢献",type:"ソーシャルビジネス",addr:"1344 Abbot Kinney Blvd, Venice",lat:33.9928,lng:-118.4688,desc:"「One for One」モデルの先駆け。ソーシャルビジネスの概念を一般消費者に広めた代表的ブランド。"},
   {name:"Warby Parker",jp:"ワービー・パーカー",cat:"サステナビリティ・社会貢献",type:"D2Cアイウェア",addr:"1402 Abbot Kinney Blvd, Venice",lat:33.992,lng:-118.4692,desc:"D2Cモデルでメガネの価格革命。Home Try-On、視力支援プログラム。"},
-
+  // ── 4月24日（金）セルフ・ナラティブトリップ 推奨スポット ──
+  {name:"Rolling Hills Plaza",self_trip:true,jp:"ローリングヒルズ・プラザ",cat:"ライフスタイル（飲食系）",type:"ショッピングプラザ",addr:"3832 Sepulveda Blvd, Torrance, CA 90505",lat:33.8155,lng:-118.3398,desc:"4/24セルフトリップ推奨。Whole Foods, Trader Joe's, Nijiya Market, Drybarが集結するプラザ。WABHから車で約5〜10分（3マイル）。1箇所で複数の推奨スポットを効率よく回れる。"},
+  {name:"Del Amo Fashion Center",self_trip:true,jp:"デルアモ・ファッションセンター",cat:"ライフスタイル（ファッション・ウェルネス）",type:"ショッピングモール",addr:"3525 W Carson St, Torrance, CA 90503",lat:33.8313,lng:-118.3520,desc:"4/24セルフトリップ推奨。alo（ヨガウェア）やMitsuwa（日系スーパー）が入る大型モール。WABHから車で約3分（1.3マイル）。Torrance最大のショッピングスポット。"},
+  {name:"Tokyo Central Torrance",self_trip:true,jp:"東京セントラル トーランス店",cat:"ライフスタイル（飲食系）",type:"日系スーパー",addr:"3832 Sepulveda Blvd, Torrance, CA 90505",lat:33.8170,lng:-118.3390,desc:"4/24セルフトリップ推奨。ドンキグループの日系スーパー・トーランス店。店舗内全般が見どころ。商品裏のWarning表示、日本の添加物事情との違いに注目。WABHから車で約3分（1.4マイル）。"},
 ];
 
-// ── Map ──
-const map=L.map('map',{zoomControl:false}).setView([WABH.lat,WABH.lng],12);
-// Ensure map renders correctly in flex layout
+const map=L.map('map',{zoomControl:false}).setView([WABH.lat,WABH.lng],11);
+// Ensure map renders - multiple invalidateSize calls for different load timings
 setTimeout(()=>map.invalidateSize(),100);
+setTimeout(()=>map.invalidateSize(),500);
+setTimeout(()=>map.invalidateSize(),1500);
 L.control.zoom({position:'topleft'}).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'© <a href="https://carto.com/">CARTO</a> © <a href="https://www.openstreetmap.org/copyright">OSM</a>',maxZoom:20,subdomains:'abcd'}).addTo(map);
+// Primary: OSM standard tiles (most reliable worldwide)
+var tileOSM=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:19});
+// Fallback: CARTO Voyager (prettier but can fail in some regions)
+var tileCarto=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'© <a href="https://carto.com/">CARTO</a> © <a href="https://www.openstreetmap.org/copyright">OSM</a>',maxZoom:20,subdomains:'abcd'});
+// Try CARTO first, fall back to OSM on error
+tileCarto.on('tileerror',function(){map.removeLayer(tileCarto);tileOSM.addTo(map)});
+tileCarto.addTo(map);
+// Safety net: if no tiles loaded after 4s, switch to OSM
+setTimeout(function(){var imgs=document.querySelectorAll('.leaflet-tile-loaded');if(imgs.length<3){map.removeLayer(tileCarto);tileOSM.addTo(map)}},4000);
 
 function hav(a,b,c,d){const R=6371,dL=(c-a)*Math.PI/180,dN=(d-b)*Math.PI/180,x=Math.sin(dL/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
 function mi(k){return(k*.621371).toFixed(1)}
 function dt(k){return Math.round(k/30*60)}
 
-// WABH marker
 L.marker([WABH.lat,WABH.lng],{icon:L.divIcon({html:'<div class="start-icon">★</div>',className:'',iconSize:[30,30],iconAnchor:[15,15]})}).addTo(map)
-  .bindPopup(`<div style="font-size:13px"><b>★ 出発地点: ${WABH.name}</b><br><span style="color:#666">9850 Wilshire Blvd, Beverly Hills, CA 90210</span><br><br><i>Alli Webbセミナー後、ここからNarrative Tripスタート<br>4月25日（土）午後</i></div>`);
+  .bindPopup('<div style="font-size:13px"><b>★ 出発地点: '+WABH.name+'</b><br><span style="color:#666">9850 Wilshire Blvd, Beverly Hills, CA 90210</span><br><br><i>4/25: Alli Webbセミナー後、Narrative Tripスタート<br>4/24: セルフ・ナラティブトリップ（Torrance周辺）</i></div>');
 
-// Distance circles
 [2,5,10].forEach(km=>{
   const c=km===2?'#27ae60':km===5?'#f39c12':'#e74c3c';
   L.circle([WABH.lat,WABH.lng],{radius:km*1000,fill:false,color:c,weight:1.5,dashArray:'6,4',opacity:.5}).addTo(map);
   const b=45*Math.PI/180,R=6371000,la=WABH.lat*Math.PI/180,lo=WABH.lng*Math.PI/180;
   const la2=Math.asin(Math.sin(la)*Math.cos(km*1000/R)+Math.cos(la)*Math.sin(km*1000/R)*Math.cos(b));
   const lo2=lo+Math.atan2(Math.sin(b)*Math.sin(km*1000/R)*Math.cos(la),Math.cos(km*1000/R)-Math.sin(la)*Math.sin(la2));
-  L.marker([la2*180/Math.PI,lo2*180/Math.PI],{icon:L.divIcon({html:`<span style="background:white;padding:1px 5px;border-radius:8px;font-size:10px;font-weight:600;color:${c};border:1px solid ${c}">${km}km/${mi(km)}mi</span>`,className:'',iconSize:[60,16],iconAnchor:[0,8]})}).addTo(map);
+  L.marker([la2*180/Math.PI,lo2*180/Math.PI],{icon:L.divIcon({html:'<span style="background:white;padding:1px 5px;border-radius:8px;font-size:10px;font-weight:600;color:'+c+';border:1px solid '+c+'">'+km+'km/'+mi(km)+'mi</span>',className:'',iconSize:[60,16],iconAnchor:[0,8]})}).addTo(map);
 });
 
-// Safety layer
 const safetyLayer=L.layerGroup();
 let safetyOn=false;
 safetyZones.forEach(z=>{
@@ -259,30 +250,31 @@ safetyZones.forEach(z=>{
   safetyLayer.addLayer(L.circle([z.lat,z.lng],{
     radius:z.r,fillColor:z.color.replace(/[\d.]+\)$/,'.35)'),fillOpacity:.4,
     color:z.rating>=4?'#27ae60':z.rating>=3?'#f39c12':'#e74c3c',weight:2,opacity:.6
-  }).bindPopup(`<div style="font-size:13px"><b>${z.name}</b><br><span style="font-size:16px">${ratingLabel}</span><br><br><span style="color:#555">${z.advice}</span></div>`));
+  }).bindPopup('<div style="font-size:13px"><b>'+z.name+'</b><br><span style="font-size:16px">'+ratingLabel+'</span><br><br><span style="color:#555">'+z.advice+'</span></div>'));
 });
 
-// ── Spot markers ──
 const layerGroups={};
 Object.keys(cats).forEach(c=>{layerGroups[c]=L.layerGroup().addTo(map)});
 const active={};Object.keys(cats).forEach(c=>{active[c]=true});
 let iseFilter=false;
+let selfTripFilter=false;
 
 function makePopup(s,c,d,miles,mins,dl,safetyInfo){
-  return `<div style="min-width:220px;font-size:12px">
-    <div style="background:${c.color};color:white;padding:5px 10px;margin:-13px -20px 8px;border-radius:4px 4px 0 0;font-weight:600;font-size:11px">${c.icon} ${s.cat}</div>
-    ${s.ise_pick?'<div style="background:#FF6B35;color:white;display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px">⭐ 伊勢さんおすすめ</div><br>':''}
-    <b style="font-size:14px">${s.name}</b><br><span style="color:#888">${s.jp}</span><br>
-    <span style="color:#555;font-size:11px">${s.type}</span>
-    <div style="background:#f8f9fa;padding:6px 8px;border-radius:5px;margin:6px 0">
-      <b>📍 WABHからの距離:</b><br>
-      ${d.toFixed(1)}km (${miles}mi) — 車で約${mins}分<br>
-      <span style="font-size:11px">${dl}</span>
-    </div>
-    ${safetyInfo}
-    <div style="color:#444;margin-top:4px">${s.desc}</div>
-    ${s.addr?`<div style="color:#999;font-size:10px;margin-top:4px">📌 ${s.addr}</div>`:''}
-  </div>`;
+  return '<div style="min-width:220px;font-size:12px">'+
+    '<div style="background:'+c.color+';color:white;padding:5px 10px;margin:-13px -20px 8px;border-radius:4px 4px 0 0;font-weight:600;font-size:11px">'+c.icon+' '+s.cat+'</div>'+
+    (s.ise_pick?'<div style="background:#FF6B35;color:white;display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px">⭐ 伊勢さんおすすめ</div><br>':'')+
+    (s.self_trip?'<div style="background:#8E24AA;color:white;display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px">🟣 4/24 セルフトリップ</div><br>':'')+
+    '<b style="font-size:14px">'+s.name+'</b><br><span style="color:#888">'+s.jp+'</span><br>'+
+    '<span style="color:#555;font-size:11px">'+s.type+'</span>'+
+    '<div style="background:#f8f9fa;padding:6px 8px;border-radius:5px;margin:6px 0">'+
+    '<b>📍 WABHからの距離:</b><br>'+
+    d.toFixed(1)+'km ('+miles+'mi) — 車で約'+mins+'分<br>'+
+    '<span style="font-size:11px">'+dl+'</span>'+
+    '</div>'+
+    safetyInfo+
+    '<div style="color:#444;margin-top:4px">'+s.desc+'</div>'+
+    (s.addr?'<div style="color:#999;font-size:10px;margin-top:4px">📌 '+s.addr+'</div>':'')+
+    '</div>';
 }
 
 spots.forEach(s=>{
@@ -294,17 +286,21 @@ spots.forEach(s=>{
   for(const z of safetyZones){
     if(hav(z.lat,z.lng,s.lat,s.lng)<z.r/1000){
       const rl=z.rating>=5?'⭐安全':z.rating>=4?'✅概ね安全':z.rating>=3?'⚠️普通':'🔴注意';
-      safetyInfo=`<div style="background:${z.rating>=4?'#E8F5E9':z.rating>=3?'#FFF8E1':'#FFEBEE'};padding:6px 8px;border-radius:5px;margin:4px 0;font-size:11px"><b>安全度: ${rl}</b><br>${z.advice}</div>`;
+      safetyInfo='<div style="background:'+(z.rating>=4?'#E8F5E9':z.rating>=3?'#FFF8E1':'#FFEBEE')+';padding:6px 8px;border-radius:5px;margin:4px 0;font-size:11px"><b>安全度: '+rl+'</b><br>'+z.advice+'</div>';
       break;
     }
   }
   const isIse=s.ise_pick||false;
-  const icon=L.divIcon({html:`<div style="position:relative"><div style="background:${c.color};color:white;width:${isIse?28:24}px;height:${isIse?28:24}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:${isIse?13:12}px;border:${isIse?'3px solid #FF6B35':'2px solid white'};box-shadow:${isIse?'0 0 0 2px white,0 0 10px rgba(255,107,53,.6),0 2px 6px rgba(0,0,0,.3)':'0 2px 6px rgba(0,0,0,.3)'}">${c.icon}</div>${isIse?'<div class="ise-badge">★</div>':''}</div>`,className:'',iconSize:[isIse?28:24,isIse?28:24],iconAnchor:[isIse?14:12,isIse?14:12]});
+  const isSelfTrip=s.self_trip||false;
+  const borderColor=isSelfTrip?'#8E24AA':isIse?'#FF6B35':'white';
+  const glowColor=isSelfTrip?'rgba(142,36,170,.6)':isIse?'rgba(255,107,53,.6)':'none';
+  const sz=isIse||isSelfTrip?28:24;
+  const bw=isIse||isSelfTrip?3:2;
+  const icon=L.divIcon({html:'<div style="position:relative"><div style="background:'+c.color+';color:white;width:'+sz+'px;height:'+sz+'px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:'+(isIse||isSelfTrip?13:12)+'px;border:'+bw+'px solid '+borderColor+';box-shadow:'+(isIse||isSelfTrip?'0 0 0 2px white,0 0 10px '+glowColor+',0 2px 6px rgba(0,0,0,.3)':'0 2px 6px rgba(0,0,0,.3)')+'">'+c.icon+'</div>'+(isIse?'<div class="ise-badge">★</div>':'')+(isSelfTrip?'<div class="self-trip-badge">24</div>':'')+'</div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
   const popup=makePopup(s,c,d,miles,mins,dl,safetyInfo);
   layerGroups[s.cat].addLayer(L.marker([s.lat,s.lng],{icon}).bindPopup(popup));
 });
 
-// ── Info panel (closable) ──
 function toggleInfo(show){
   const info=document.getElementById('info');
   const btn=document.getElementById('info-reopen');
@@ -315,16 +311,17 @@ const infoEl=document.getElementById('info');
 const near=spots.filter(s=>hav(WABH.lat,WABH.lng,s.lat,s.lng)<2).length;
 const med=spots.filter(s=>{const d=hav(WABH.lat,WABH.lng,s.lat,s.lng);return d>=2&&d<5}).length;
 const far=spots.filter(s=>hav(WABH.lat,WABH.lng,s.lat,s.lng)>=5).length;
-infoEl.innerHTML=`<button id="info-close" onclick="toggleInfo(false)">✕</button>
-<h3>★ 出発地点: WABH</h3>
-<div style="background:#FFF3E0;border:1px solid #FF6B35;border-radius:6px;padding:6px 8px;margin-bottom:8px;font-size:11px"><b style="color:#FF6B35">⭐ 伊勢さんおすすめ: ${spots.filter(s=>s.ise_pick).length}スポット</b></div>
-<div style="color:#666;font-size:11px;margin-bottom:6px">Waldorf Astoria Beverly Hills<br>Alli Webbセミナー後 · 4月25日午後</div>
-<div class="st"><span>🟢 徒歩圏内 (&lt;2km)</span><b>${near}スポット</b></div>
-<div class="st"><span>🟡 短い車移動 (2-5km)</span><b>${med}スポット</b></div>
-<div class="st"><span>🔴 車で移動 (5km+)</span><b>${far}スポット</b></div>
-<div class="st" style="margin-top:4px"><span><b>合計</b></span><b>${spots.length}スポット</b></div>`;
+const selfTripCount=spots.filter(s=>s.self_trip).length;
+infoEl.innerHTML='<button id="info-close" onclick="toggleInfo(false)">✕</button>'+
+'<h3>★ 出発地点: WABH</h3>'+
+'<div style="background:#FFF3E0;border:1px solid #FF6B35;border-radius:6px;padding:6px 8px;margin-bottom:6px;font-size:11px"><b style="color:#FF6B35">⭐ 伊勢さんおすすめ: '+spots.filter(s=>s.ise_pick).length+'スポット</b></div>'+
+'<div style="background:#F3E5F5;border:1px solid #8E24AA;border-radius:6px;padding:6px 8px;margin-bottom:8px;font-size:11px"><b style="color:#8E24AA">🟣 4/24 セルフトリップ: '+selfTripCount+'スポット</b></div>'+
+'<div style="color:#666;font-size:11px;margin-bottom:6px">Waldorf Astoria Beverly Hills<br>4/24 セルフトリップ · 4/25 Alli Webb後</div>'+
+'<div class="st"><span>🟢 徒歩圏内 (&lt;2km)</span><b>'+near+'</b></div>'+
+'<div class="st"><span>🟡 短い車移動 (2-5km)</span><b>'+med+'</b></div>'+
+'<div class="st"><span>🔴 車で移動 (5km+)</span><b>'+far+'</b></div>'+
+'<div class="st" style="margin-top:4px"><span><b>合計</b></span><b>'+spots.length+'スポット</b></div>';
 
-// ── Filter drawer ──
 function openDrawer(){
   document.getElementById('filter-drawer').classList.add('open');
   document.getElementById('backdrop').classList.add('show');
@@ -338,14 +335,17 @@ function closeDrawer(){
 
 function applyFilters(){
   Object.keys(layerGroups).forEach(cat=>map.removeLayer(layerGroups[cat]));
-  if(iseFilter){
-    // Show only Ise picks within active categories
+  if(iseFilter||selfTripFilter){
     Object.keys(cats).forEach(cat=>{
       if(!active[cat])return;
       const lg=L.layerGroup();
       layerGroups[cat].eachLayer(l=>{
         const spot=spots.find(s=>s.lat===l.getLatLng().lat&&s.lng===l.getLatLng().lng);
-        if(spot&&spot.ise_pick)lg.addLayer(l);
+        if(!spot)return;
+        let show=false;
+        if(iseFilter&&spot.ise_pick)show=true;
+        if(selfTripFilter&&spot.self_trip)show=true;
+        if(show)lg.addLayer(l);
       });
       lg.addTo(map);
     });
@@ -354,31 +354,32 @@ function applyFilters(){
   }
 }
 
-// Build drawer content
 const body=document.getElementById('drawer-body');
-
-// Ise picks filter
-body.innerHTML=`<div style="margin-bottom:16px">
-  <div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">⭐ おすすめ</div>
-  <div class="filter-grid">
-    <div class="filter-chip ise" id="chip-ise" onclick="toggleIse()">
-      <span>⭐ 伊勢さんおすすめのみ</span>
-      <span class="count">${spots.filter(s=>s.ise_pick).length}</span>
-    </div>
-  </div>
-</div>
-<div style="margin-bottom:16px">
-  <div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">📂 カテゴリー</div>
-  <div class="filter-grid" id="cat-chips"></div>
-</div>
-<div>
-  <div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">🛡️ 安全マップ</div>
-  <div class="filter-grid">
-    <div class="filter-chip safety" id="chip-safety" onclick="toggleSafety()">
-      <span>⚠️ 安全度エリア表示</span>
-    </div>
-  </div>
-</div>`;
+body.innerHTML='<div style="margin-bottom:16px">'+
+  '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">⭐ おすすめ ＆ 🟣 セルフトリップ</div>'+
+  '<div class="filter-grid">'+
+    '<div class="filter-chip ise" id="chip-ise" onclick="toggleIse()">'+
+      '<span>⭐ 伊勢さんおすすめのみ</span>'+
+      '<span class="count">'+spots.filter(s=>s.ise_pick).length+'</span>'+
+    '</div>'+
+    '<div class="filter-chip self-trip" id="chip-self-trip" onclick="toggleSelfTrip()">'+
+      '<span>🟣 4/24 セルフトリップ</span>'+
+      '<span class="count">'+spots.filter(s=>s.self_trip).length+'</span>'+
+    '</div>'+
+  '</div>'+
+'</div>'+
+'<div style="margin-bottom:16px">'+
+  '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">📂 カテゴリー</div>'+
+  '<div class="filter-grid" id="cat-chips"></div>'+
+'</div>'+
+'<div>'+
+  '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:8px">🛡️ 安全マップ</div>'+
+  '<div class="filter-grid">'+
+    '<div class="filter-chip safety" id="chip-safety" onclick="toggleSafety()">'+
+      '<span>⚠️ 安全度エリア表示</span>'+
+    '</div>'+
+  '</div>'+
+'</div>';
 
 const catChips=document.getElementById('cat-chips');
 Object.entries(cats).forEach(([cat,cfg])=>{
@@ -388,7 +389,7 @@ Object.entries(cats).forEach(([cat,cfg])=>{
   chip.style.setProperty('--chip-color',cfg.color);
   chip.style.setProperty('--chip-bg',cfg.color+'18');
   chip.dataset.cat=cat;
-  chip.innerHTML=`<span class="dot" style="background:${cfg.color}"></span><span>${cfg.icon} ${cfg.en}</span><span class="count">${count}</span>`;
+  chip.innerHTML='<span class="dot" style="background:'+cfg.color+'"></span><span>'+cfg.icon+' '+cfg.en+'</span><span class="count">'+count+'</span>';
   chip.onclick=()=>{
     active[cat]=!active[cat];
     chip.classList.toggle('active',active[cat]);
@@ -400,11 +401,18 @@ Object.entries(cats).forEach(([cat,cfg])=>{
 
 function toggleIse(){
   iseFilter=!iseFilter;
-  const chip=document.getElementById('chip-ise');
-  chip.classList.toggle('active',iseFilter);
+  document.getElementById('chip-ise').classList.toggle('active',iseFilter);
+  if(iseFilter){selfTripFilter=false;document.getElementById('chip-self-trip').classList.remove('active')}
   applyFilters();
-  // Update floating button badge
-  document.getElementById('filter-btn').querySelector('.badge').textContent=iseFilter?'⭐ON':'⭐12';
+  document.getElementById('filter-btn').querySelector('.badge').textContent=iseFilter?'⭐ON':selfTripFilter?'🟣ON':'⭐12';
+}
+
+function toggleSelfTrip(){
+  selfTripFilter=!selfTripFilter;
+  document.getElementById('chip-self-trip').classList.toggle('active',selfTripFilter);
+  if(selfTripFilter){iseFilter=false;document.getElementById('chip-ise').classList.remove('active')}
+  applyFilters();
+  document.getElementById('filter-btn').querySelector('.badge').textContent=selfTripFilter?'🟣ON':iseFilter?'⭐ON':'⭐12';
 }
 
 function toggleSafety(){
@@ -414,7 +422,6 @@ function toggleSafety(){
   safetyOn?map.addLayer(safetyLayer):map.removeLayer(safetyLayer);
 }
 
-// Swipe down to close drawer (touch support)
 let touchStartY=0;
 document.getElementById('filter-drawer').addEventListener('touchstart',e=>{touchStartY=e.touches[0].clientY},{passive:true});
 document.getElementById('filter-drawer').addEventListener('touchmove',e=>{
@@ -422,10 +429,34 @@ document.getElementById('filter-drawer').addEventListener('touchmove',e=>{
   if(dy>60)closeDrawer();
 },{passive:true});
 
-// Auto-close info panel on mobile after 5 seconds
 if(window.innerWidth<=768){
   setTimeout(()=>toggleInfo(false),4000);
 }
+
+// ── Fit map to show all spots on load ──
+const allBounds=L.latLngBounds(spots.map(s=>[s.lat,s.lng]));
+allBounds.extend([WABH.lat,WABH.lng]);
+map.fitBounds(allBounds,{padding:[40,40]});
+
+// ── Quick-jump area nav (helpful for novice LA travelers) ──
+const areaNav=L.control({position:'topright'});
+areaNav.onAdd=function(){
+  const div=L.DomUtil.create('div','area-nav');
+  div.innerHTML='<div class="area-nav-inner">'+
+    '<div class="area-title">📍 エリア移動</div>'+
+    '<button class="area-btn" onclick="jumpTo(34.069,-118.401,14)">🏨 Beverly Hills</button>'+
+    '<button class="area-btn" onclick="jumpTo(33.825,-118.34,13)">🇯🇵 Torrance<br><span style=\'font-size:9px;opacity:.7\'>セルフトリップ</span></button>'+
+    '<button class="area-btn" onclick="jumpTo(34.05,-118.245,14)">🏙️ DTLA</button>'+
+    '<button class="area-btn" onclick="jumpTo(34.02,-118.495,14)">🏖️ Santa Monica</button>'+
+    '<button class="area-btn all" onclick="fitAll()">🗺️ 全体表示</button>'+
+  '</div>';
+  L.DomEvent.disableClickPropagation(div);
+  return div;
+};
+areaNav.addTo(map);
+
+function jumpTo(lat,lng,zoom){map.flyTo([lat,lng],zoom,{duration:0.8})}
+function fitAll(){map.flyToBounds(allBounds,{padding:[40,40],duration:0.8})}
 </script>
 </body>
 </html>
